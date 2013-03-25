@@ -1,4 +1,3 @@
-
-Tareas De Ingenieria en Software
+Tareas de Ingenieria en Software
 
 Patricio Espinoza Salgado
