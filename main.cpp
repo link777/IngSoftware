@@ -44,6 +44,10 @@ int main()
 		x = 1;	
 		y = 1;
 		Arreglo[y][x] = 1;
+		Arreglo[3][3]= 77; // aqui va un peon
+		Arreglo[6][3]= 77; // aqui va un peon
+		Arreglo[3][6]= 77; // aqui va un peon 
+		Arreglo[6][6]= 77; // aqui va un peon
 
 		// Mientras no se encuentre un lugar para el caballo
 		while ( 1000 != ciclos )
