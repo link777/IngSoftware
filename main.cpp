@@ -109,7 +109,10 @@ void Imprime( int Matriz[TAMANO + 1][TAMANO + 1])
 	{ 
 		for ( j = 1; j <= TAMANO; j++)
 		{ 
-  			printf(" %d\t", Matriz[i][j]);
+  			if( 77 != Matriz[i][j])
+  				printf(" %d\t", Matriz[i][j]);
+  			else
+ 				printf(" 0\t" );
 		} 
 		printf("\n\n\n");
 	} 
