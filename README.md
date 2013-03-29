@@ -1,3 +1,4 @@
 Tareas de Ingenieria en Software
 
-Patricio Espinoza Salgado
+Patricio Espinoza Salgado - link777
+Cristian Garrido - cris-gar
