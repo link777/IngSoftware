@@ -11,17 +11,18 @@
 
 using namespace std;
 
-PGconn *cnn = NULL;
-PGresult *result = NULL;
-
-char *host = "sebastian.cl";
-char *port = "5432";
-char *dataBase = "iswdb";
-char *user = "isw";
-char *passwd = "isw";
 
 int main(int argc, char * argv[])
 {
+    PGconn *cnn = NULL;
+    PGresult *result = NULL;
+
+    char *host = "sebastian.cl";
+    char *port = "5432";
+    char *dataBase = "iswdb";
+    char *user = "isw";
+    char *passwd = "isw";
+
     int i;
 
    cnn = PQsetdbLogin(host,port,NULL,NULL,dataBase,user,passwd);
