@@ -10,15 +10,12 @@
 
 #include <iostream>
 #include <cmath>
-<<<<<<< HEAD
 #include <string.h>
 #include <ctime>
-=======
 #include <fstream>
 #include <string.h>
 #include <libpq-fe.h>
 
->>>>>>> Update
 
 using namespace std;
 
@@ -28,7 +25,7 @@ int main(int argc, char** argv)
 int char_2_int(const char *p);
 void ayuda();
 void acercaDe();
-void conexionI(int ID);
+void conexionI(string ID);
 void conexionA(const char *sentencia);
 void conexionS(const char *sentencia);
 
@@ -37,8 +34,8 @@ void conexionS(const char *sentencia);
     {
       ayuda();
     }
-            else
-                {
+        else
+            {
 
                 int i=1;
                 char simbolo = argv[1][0];
@@ -52,84 +49,52 @@ void conexionS(const char *sentencia);
                      simbolo = argv[1][1];
                    // cout<<"\nACA2";
                    // cout<<"\n"<<simbolo;
-                   switch(simbolo)
-                    {
-                            case 'i':
-<<<<<<< HEAD
-                                {     // cout<<"\nACA3";
-                                         int id =0,nDeEleVec=0,i=0,cifra;
-                                         
-                                            nDeEleVec = strlen((&argv[2][0]));// obtiene el largo del strig id
-                                           
-                                        for(int j = 0; j < nDeEleVec; j++)// convierte el string a entero
-                                            {
 
-                                                    simbolo = argv[2][j];
-                                                    cifra = char_2_int(&simbolo);
-                                                    //cout<<endl<<nDeEleVec-j-1<<" numero"<<cifra;
-                                                    id += cifra * pow(10,nDeEleVec-j-1);
-
-                                             }
-                                                  cout<<"\nel id es:"<<id;                                
-                                        //consulta sql con id
-                                  break;
-=======
-                                {       // cout<<"\nACA3";
-                                    int ID =0,nDeEleVec=0,i=0,cifra;
-
+                            if(simbolo=='i' && argc==3)
+                                 {       // cout<<"\nACA3";
+                                        int ID =0,nDeEleVec=0,i=0,cifra;
                                         nDeEleVec = strlen((&argv[2][0]));// obtiene el largo del strig id
 
-                                        for(int j = 0; j < nDeEleVec; j++)// convierte el string a entero
-                                            {
-                                                    simbolo = argv[2][j];
-                                                    cifra = char_2_int(&simbolo);
-                                                    //cout<<endl<<nDeEleVec-j-1<<" numero"<<cifra;
-                                                    ID += cifra * pow(10,nDeEleVec-j-1);
-                                             }
-                                                  cout<<"\nEl ID ingresado es: "<<ID;
-                                        conexionI(ID);
-                                break;
->>>>>>> Update
+                                            for(int j = 0; j < nDeEleVec; j++)// convierte el string a entero
+                                                {
+                                                        simbolo = argv[2][j];
+                                                        cifra = char_2_int(&simbolo);
+                                                        //cout<<endl<<nDeEleVec-j-1<<" numero"<<cifra;
+                                                        ID += cifra * pow(10,nDeEleVec-j-1);
+                                                 }
+                                                      cout<<"\nEl ID ingresado es: "<<&argv[2][0];
+                                            conexionI(&argv[2][0]);
+
                                 }
 
 
-                            case 'a':
+                            if(simbolo=='a')
                                 {
                                      const char *sentencia="SELECT semestre,seccion from cursos";
-                                     cout<<"\n\t Parametro -a:"<<endl;
+                                     cout<<"\n\t\t\tParametro -a:"<<endl;
                                      conexionA(sentencia);//procedimiento avg y desv s en un archivo
-                                break;
                                 }
 
 
-                            case 's':
+                            if(simbolo=='s')
                                 {
                                      const char *sentencia="SELECT avg(A.nota) as \"Promedio\", STDDEV(A.nota) as \"Desviacion Estandar\", C.asignatura as \"Asignatura\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id group by C.asignatura";
-                                     cout<<"\n\t Parametro -s"<<endl;//procedimiento mustra la desv y el promedio por asignatura
+                                     cout<<"\n\t\t\tParametro -s"<<endl;//procedimiento mustra la desv y el promedio por asignatura
                                      conexionS(sentencia);
-                                break;
                                 }
 
 
-                            case 'v':
+                            if(simbolo=='v')
                                 {
-                                     acercaDe();
-                                break;                                    //procedimiento acerca de
+                                     acercaDe();                                  //procedimiento acerca de
                                 }
 
-                            case 'h':
+
+                            else       //SI LA OPCION INGRESADA NO ESTA EN EL MENU, ENTRA AQUI.
                                 {
-                                     ayuda();
-                                break;
+                                    cout<<endl<<"\n\t\t\tParametro invalido\n"<<endl;
+                                    ayuda();
                                 }
-
-                            default:       //SI LA OPCION INGRESADA NO ESTA EN EL MENU, ENTRA AQUI.
-                                {
-                                    cout<<endl<<"\n\t        Parametro invalido, ingrese -h para ayuda.\n"<<endl;
-                                break;
-                                }
-                    }
-
                 }
             }
 
@@ -164,34 +129,37 @@ int char_2_int(const char *p)
 void ayuda()
 {
 
-        cout<<"\n\t\t\tLos parametros del programa son:"<<endl<<endl;
+        cout<<"\n\n\t\t\tLos parametros del programa son:"<<endl<<endl;
         cout<<"\t-i [id]    Estima la nota de calculo IV segun el id del estudiante,\n"
             <<"\t           el id debe ser un nuemro entero, ej -id 5432."<<endl<<endl;
         cout<<"\t-a         Estima la nota de calculo IV para todos los estudiantes,\n"
-            <<"\t           creando un archivo de texto (estimaciones.csv)."<<endl<<endl;
-        cout<<"\t-s         Muestra el promedio, la desviacion estandar de cada una\n"
+            <<"\t           creando un archivo de texto (estimaciones.csv), ordenado\n"
+            <<"\t           por ID de estudiante de manera ascendente."<<endl<<endl;
+        cout<<"\t-s         Muestra el promedio y la desviacion estandar de cada una\n"
             <<"\t           de las asignaturas (Calculo I, II, III y IV)."<<endl<<endl;
         cout<<"\t-v         Muestra la fecha y hora de compilacion, la fecha y hora\n "
             <<"\t           actual, la version del programa y el nombre de los\n"
-            <<"\t           integrantes del grupo de trabajo.\n";
+            <<"\t           integrantes del grupo de trabajo.\n\n";
 }
 
 void acercaDe()
 {
-	cout<<"\n\t        Integrantes: Patricio Espinoza.\n"
-        <<"\t                     Jaime Guarda Muga.\n"
-        <<"\t                     Miguel Maraboli Mendez.\n"
-	    <<"\t                     Nicolas Paez Morgado.\n";
-	    time_t tSac = time(NULL);  // instante actual
+        time_t tSac = time(NULL);  // instante actual
 
-         struct tm* pt1 = localtime(&tSac);
-         cout << "\t   Hora actual= " << pt1->tm_hour << ":" << pt1->tm_min << ":"
+        struct tm* pt1 = localtime(&tSac);
+        cout << "\n\n\t\tHora actual = " << pt1->tm_hour << ":" << pt1->tm_min << ":"
                        << pt1->tm_sec << endl;
-         cout << "\t   Fecha actual= " << pt1->tm_mday << "-" << pt1->tm_mon+1 << "-"
+        cout << "\t\tFecha actual= " << pt1->tm_mday << "-" << pt1->tm_mon+1 << "-"
                        << pt1->tm_year+1900 << endl;
+
+        cout<<"\n\t\tIntegrantes: Patricio Espinoza.\n"
+            <<"\t                     Jaime Guarda Muga.\n"
+            <<"\t                     Miguel Maraboli Mendez.\n"
+            <<"\t                     Nicolas Paez Morgado.\n";
+
 }
 
-void conexionI(int ID)
+void conexionI(string ID)
 {
     PGconn *cnn = NULL;
     PGresult *consulta = NULL;
@@ -202,7 +170,14 @@ void conexionI(int ID)
     char *user = "isw";
     char *passwd = "isw";
 
-    const char *sentencia="SELECT (A.nota) as \"Nota Real\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id where A.estudiante_id=\"+ID+\"";
+    std::string  cadena= "SELECT (A.nota) as \"Nota Real\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id where A.estudiante_id=";
+    cadena.append(ID);
+    cadena.append("ctm");
+
+    const char *sentencia= cadena.c_str();
+
+    cout<<sentencia<<endl;
+
     int i;
 
    cnn = PQsetdbLogin(host,port,NULL,NULL,dataBase,user,passwd);
@@ -390,7 +365,7 @@ void conexionS(const char *sentencia)
         // Ahora nos toca liberar la memoria
         PQclear(consulta);
 
-        }
+    }
 
     else
         {
@@ -402,3 +377,4 @@ void conexionS(const char *sentencia)
 
     PQfinish(cnn);
 }
+
