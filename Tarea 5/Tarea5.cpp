@@ -11,7 +11,7 @@
 #include <iostream>
 #include <cmath>
 #include <string.h>
-
+#include <ctime>
 
 using namespace std;
 
@@ -149,4 +149,11 @@ void acercaDe()
         <<"\t                     Jaime Guarda Muga.\n"
         <<"\t                     Miguel Maraboli Mendez.\n"
 	    <<"\t                     Nicolas Paez Morgado.\n";
+	    time_t tSac = time(NULL);  // instante actual
+
+         struct tm* pt1 = localtime(&tSac);
+         cout << "\t   Hora actual= " << pt1->tm_hour << ":" << pt1->tm_min << ":"
+                       << pt1->tm_sec << endl;
+         cout << "\t   Fecha actual= " << pt1->tm_mday << "-" << pt1->tm_mon+1 << "-"
+                       << pt1->tm_year+1900 << endl;
 }
