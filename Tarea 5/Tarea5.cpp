@@ -152,7 +152,13 @@ void acercaDe()
         cout << "\t\tFecha actual= " << pt1->tm_mday << "-" << pt1->tm_mon+1 << "-"
                        << pt1->tm_year+1900 << endl;
 
-        cout<<"\n\t\tIntegrantes: Patricio Espinoza.\n"
+        cout<< "\n\n\t\tHora de compilacion: " __TIME__<<endl;
+        cout<< "\n\t\tFecha de compilacion: " __DATE__<<endl;
+        cout<< "\n\t\tVersion de la aplicacion: BETA"<<endl;
+        cout<< "\n\t\tVersion del compilador GCC: " __VERSION__;
+
+
+        cout<<"\n\n\t\tIntegrantes: Patricio Espinoza.\n"
             <<"\t                     Jaime Guarda Muga.\n"
             <<"\t                     Miguel Maraboli Mendez.\n"
             <<"\t                     Nicolas Paez Morgado.\n";
