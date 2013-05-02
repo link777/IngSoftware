@@ -1,10 +1,13 @@
 
-/*
- * File:   main.cpp
- * Author: linux
- *
- * Created on 29 de abril de 2013, 06:32 PM
- */
+    /*-----------------------------------------------*
+     |     Ingenieria en Software:                   |
+     |                                               |
+     |     Integrante: Patricio Espinoza Salgado.    |
+     |                 Jaime Guarda Muga.            |
+     |                 Miguel Maraboli Mendez.       |
+     |                 Nicolas Paez Morgado.         |
+     |                                               |
+     *-----------------------------------------------*/
 
 #include <iostream>
 #include <cmath>
@@ -143,7 +146,7 @@ void ayuda()
 void acercaDe()
 {
 	cout<<"\t        Integrantes: Patricio Espinoza.\n"
-        <<"\t                     Nicolas Paez.\n"
-        <<"\t                     Jaime Guarda.\n"
-	    <<"\t                     Miguel Maraboli.\n";
+        <<"\t                     Jaime Guarda Muga.\n"
+        <<"\t                     Miguel Maraboli Mendez.\n"
+	    <<"\t                     Nicolas Paez Morgado.\n";
 }

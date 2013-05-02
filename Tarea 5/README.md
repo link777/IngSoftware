@@ -3,6 +3,6 @@ _________________________________
 
 
 Patricio Espinoza Salgado - link777
-Nicolas Paez              -
-Jaime Guarda		  -
-Miguel Marabolí Mendez    -
+Jaime Guarda Muga	  -
+Miguel Maraboli Mendez    -
+Nicolas Paez Morgado      -
