@@ -44,23 +44,23 @@ void acercaDe();
                    switch(simbolo)
                     {
                             case 'i':
-                                {       // cout<<"\nACA3";
-                                     int id =0,nDeEleVec=0,i=0,cifra;
-                                     while(argv[2][i])
-                                     {
-                                         nDeEleVec++;
-                                         i++;
-                                     }
+                                {     // cout<<"\nACA3";
+                                         int id =0,nDeEleVec=0,i=0,cifra;
+                                         
+                                            nDeEleVec = strlen((&argv[2][0]));// obtiene el largo del strig id
+                                           
+                                        for(int j = 0; j < nDeEleVec; j++)// convierte el string a entero
+                                            {
 
+                                                    simbolo = argv[2][j];
+                                                    cifra = char_2_int(&simbolo);
+                                                    //cout<<endl<<nDeEleVec-j-1<<" numero"<<cifra;
+                                                    id += cifra * pow(10,nDeEleVec-j-1);
 
-                                        for(int j = 0; j <= nDeEleVec; j++)
-                                        {
-                                                simbolo = argv[2][j];
-                                                cifra = char_2_int(&simbolo);
-                                                id += cifra * pow(10,argc-j);
-                                        }
-                                        //consulta sql
-                                break;
+                                             }
+                                                                                  
+                                        //consulta sql con id
+                                  break;
                                 }
 
 
