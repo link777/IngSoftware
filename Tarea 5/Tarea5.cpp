@@ -58,7 +58,7 @@ void acercaDe();
                                                     id += cifra * pow(10,nDeEleVec-j-1);
 
                                              }
-                                                                                  
+                                                  cout<<"\nel id es:"<<id;                                
                                         //consulta sql con id
                                   break;
                                 }
