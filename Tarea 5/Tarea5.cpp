@@ -10,8 +10,15 @@
 
 #include <iostream>
 #include <cmath>
+<<<<<<< HEAD
 #include <string.h>
 #include <ctime>
+=======
+#include <fstream>
+#include <string.h>
+#include <libpq-fe.h>
+
+>>>>>>> Update
 
 using namespace std;
 
@@ -21,6 +28,10 @@ int main(int argc, char** argv)
 int char_2_int(const char *p);
 void ayuda();
 void acercaDe();
+void conexionI(int ID);
+void conexionA(const char *sentencia);
+void conexionS(const char *sentencia);
+
 
     if (argc <= 1)//si no tiene parametros imprime la ayuda
     {
@@ -44,6 +55,7 @@ void acercaDe();
                    switch(simbolo)
                     {
                             case 'i':
+<<<<<<< HEAD
                                 {     // cout<<"\nACA3";
                                          int id =0,nDeEleVec=0,i=0,cifra;
                                          
@@ -61,19 +73,40 @@ void acercaDe();
                                                   cout<<"\nel id es:"<<id;                                
                                         //consulta sql con id
                                   break;
+=======
+                                {       // cout<<"\nACA3";
+                                    int ID =0,nDeEleVec=0,i=0,cifra;
+
+                                        nDeEleVec = strlen((&argv[2][0]));// obtiene el largo del strig id
+
+                                        for(int j = 0; j < nDeEleVec; j++)// convierte el string a entero
+                                            {
+                                                    simbolo = argv[2][j];
+                                                    cifra = char_2_int(&simbolo);
+                                                    //cout<<endl<<nDeEleVec-j-1<<" numero"<<cifra;
+                                                    ID += cifra * pow(10,nDeEleVec-j-1);
+                                             }
+                                                  cout<<"\nEl ID ingresado es: "<<ID;
+                                        conexionI(ID);
+                                break;
+>>>>>>> Update
                                 }
 
 
                             case 'a':
                                 {
-                                     cout<<"\n\t Opcion a"<<endl;//procedimiento avg y desv s en un archivo
+                                     const char *sentencia="SELECT semestre,seccion from cursos";
+                                     cout<<"\n\t Parametro -a:"<<endl;
+                                     conexionA(sentencia);//procedimiento avg y desv s en un archivo
                                 break;
                                 }
 
 
                             case 's':
                                 {
-                                     cout<<"\n\t Opcion s"<<endl;//procedimiento mustra la desv y el promedio por asignatura
+                                     const char *sentencia="SELECT avg(A.nota) as \"Promedio\", STDDEV(A.nota) as \"Desviacion Estandar\", C.asignatura as \"Asignatura\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id group by C.asignatura";
+                                     cout<<"\n\t Parametro -s"<<endl;//procedimiento mustra la desv y el promedio por asignatura
+                                     conexionS(sentencia);
                                 break;
                                 }
 
@@ -145,7 +178,7 @@ void ayuda()
 
 void acercaDe()
 {
-	cout<<"\t        Integrantes: Patricio Espinoza.\n"
+	cout<<"\n\t        Integrantes: Patricio Espinoza.\n"
         <<"\t                     Jaime Guarda Muga.\n"
         <<"\t                     Miguel Maraboli Mendez.\n"
 	    <<"\t                     Nicolas Paez Morgado.\n";
@@ -156,4 +189,216 @@ void acercaDe()
                        << pt1->tm_sec << endl;
          cout << "\t   Fecha actual= " << pt1->tm_mday << "-" << pt1->tm_mon+1 << "-"
                        << pt1->tm_year+1900 << endl;
+}
+
+void conexionI(int ID)
+{
+    PGconn *cnn = NULL;
+    PGresult *consulta = NULL;
+
+    char *host = "sebastian.cl";
+    char *port = "5432";
+    char *dataBase = "iswdb";
+    char *user = "isw";
+    char *passwd = "isw";
+
+    const char *sentencia="SELECT (A.nota) as \"Nota Real\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id where A.estudiante_id=\"+ID+\"";
+    int i;
+
+   cnn = PQsetdbLogin(host,port,NULL,NULL,dataBase,user,passwd);
+
+    if (PQstatus(cnn) != CONNECTION_BAD)
+        {
+            cout << "\n\t\t--------------------------------------" << endl;
+            cout << "\t\t|  Conexion al Servidor Establecida  |" << endl;
+            cout << "\t\t--------------------------------------" << endl << endl;
+
+            consulta = PQexec(cnn, sentencia);
+
+            if (consulta != NULL)
+                {
+                    int filas = PQntuples(consulta);
+                    int columnas = PQnfields(consulta);
+                    cout << "No. Filas:" << filas << endl;
+                    cout << "No. Columnas:" << columnas << endl << endl;
+
+                // Aqui se despliegan los nombres de las columnas
+
+                    cout << "Los nombres de las columnas son:" << endl << endl;
+
+                    for (i=0; i<columnas; i++)
+                        {
+                            cout << PQfname(consulta,i) << "    |    ";
+                        }
+
+                    cout << endl;
+
+                // Aqui se despliegan los valores de cada fila
+
+                for (i=0; i<filas; i++)
+                    {
+                        for (int j=0; j<columnas; j++)
+                            {
+                            cout  << PQgetvalue(consulta,i,j) << "           ";
+                            }
+                    cout << endl;
+                    }
+                }
+
+        // Ahora nos toca liberar la memoria
+        PQclear(consulta);
+
+        }
+
+    else
+        {
+            cout << "\t\t--------------------------------------" << endl;
+            cout << "\t\t|          Error de Conexion         |" << endl;
+            cout << "\t\t--------------------------------------" << endl << endl;
+            return 0;
+        }
+
+    PQfinish(cnn);
+}
+
+
+void conexionA(const char *sentencia)
+{
+    PGconn *cnn = NULL;
+    PGresult *consulta = NULL;
+
+    char *host = "sebastian.cl";
+    char *port = "5432";
+    char *dataBase = "iswdb";
+    char *user = "isw";
+    char *passwd = "isw";
+
+    int i;
+    ofstream RegistroEstimaciones("estimaciones.csv", ios::app);
+
+   cnn = PQsetdbLogin(host,port,NULL,NULL,dataBase,user,passwd);
+
+    if (PQstatus(cnn) != CONNECTION_BAD)
+        {
+            cout << "\n\t\t--------------------------------------" << endl;
+            cout << "\t\t|    Datos guardados exitosamente    |" << endl;
+            cout << "\t\t--------------------------------------" << endl << endl;
+
+            consulta = PQexec(cnn, sentencia);
+
+            if (consulta != NULL)
+                {
+                    int filas = PQntuples(consulta);
+                    int columnas = PQnfields(consulta);
+                    RegistroEstimaciones << "      No. Filas:" << filas << endl;
+                    RegistroEstimaciones << "      No. Columnas:" << columnas << endl << endl;
+
+                // Aqui se despliegan los nombres de las columnas
+
+                   RegistroEstimaciones << "     Los nombres de las columnas son:" << endl << endl;
+
+                    for (i=0; i<columnas; i++)
+                        {
+                            RegistroEstimaciones <<"     "<<  PQfname(consulta,i) << "         ";
+                        }
+
+                    RegistroEstimaciones << endl<<endl;
+
+                // Aqui se despliegan los valores de cada fila
+
+                for (i=0; i<filas; i++)
+                    {
+                        for (int j=0; j<columnas; j++)
+                            {
+                            RegistroEstimaciones  <<"     "<< PQgetvalue(consulta,i,j) << "            ";
+                            }
+                        RegistroEstimaciones << endl;
+                    }
+                }
+        RegistroEstimaciones  << "----------------------------------------------------------"<<endl<<endl;
+        RegistroEstimaciones.close();
+        // Ahora nos toca liberar la memoria
+        PQclear(consulta);
+
+        }
+
+    else
+        {
+            cout << "\t\t--------------------------------------" << endl;
+            cout << "\t\t|          Error de Conexion         |" << endl;
+            cout << "\t\t--------------------------------------" << endl << endl;
+            return 0;
+        }
+
+    PQfinish(cnn);
+}
+
+
+
+void conexionS(const char *sentencia)
+{
+    PGconn *cnn = NULL;
+    PGresult *consulta = NULL;
+
+    char *host = "sebastian.cl";
+    char *port = "5432";
+    char *dataBase = "iswdb";
+    char *user = "isw";
+    char *passwd = "isw";
+    int i;
+
+   cnn = PQsetdbLogin(host,port,NULL,NULL,dataBase,user,passwd);
+
+    if (PQstatus(cnn) != CONNECTION_BAD)
+        {
+            cout << "\n\t\t--------------------------------------" << endl;
+            cout << "\t\t|  Conexion al Servidor Establecida  |" << endl;
+            cout << "\t\t--------------------------------------" << endl << endl;
+
+            consulta = PQexec(cnn, sentencia);
+
+            if (consulta != NULL)
+                {
+                    int filas = PQntuples(consulta);
+                    int columnas = PQnfields(consulta);
+                    cout << "No. Filas:" << filas << endl;
+                    cout << "No. Columnas:" << columnas << endl << endl;
+
+                // Aqui se despliegan los nombres de las columnas
+
+                    cout << "Los nombres de las columnas son:" << endl << endl;
+
+                    for (i=0; i<columnas; i++)
+                        {
+                            cout << PQfname(consulta,i) << "              ";
+                        }
+
+                    cout << endl<<endl;
+
+                // Aqui se despliegan los valores de cada fila
+
+                for (i=0; i<filas; i++)
+                    {
+                        for (int j=0; j<columnas; j++)
+                            {
+                            cout  << PQgetvalue(consulta,i,j) << "     ";
+                            }
+                    cout << endl;
+                    }
+                }
+
+        // Ahora nos toca liberar la memoria
+        PQclear(consulta);
+
+        }
+
+    else
+        {
+            cout << "\t\t--------------------------------------" << endl;
+            cout << "\t\t|          Error de Conexion         |" << endl;
+            cout << "\t\t--------------------------------------" << endl << endl;
+            return 0;
+        }
+
+    PQfinish(cnn);
 }
