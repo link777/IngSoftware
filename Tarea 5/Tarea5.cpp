@@ -22,10 +22,9 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-int char_2_int(const char *p);
 void ayuda();
 void acercaDe();
-void conexionI(string ID);
+void conexionI(const char *sentencia);
 void conexionA(const char *sentencia);
 void conexionS(const char *sentencia);
 
@@ -47,30 +46,22 @@ void conexionS(const char *sentencia);
                 {
 
                      simbolo = argv[1][1];
-                   // cout<<"\nACA2";
-                   // cout<<"\n"<<simbolo;
+
 
                             if(simbolo=='i' && argc==3)
-                                 {       // cout<<"\nACA3";
-                                        int ID =0,nDeEleVec=0,i=0,cifra;
-                                        nDeEleVec = strlen((&argv[2][0]));// obtiene el largo del strig id
+                                 {
+                                    std::string  cadena= "SELECT * from estimados where estudiante_id= "; //concatenar la sentencia con el ID
+                                    cadena.append((&argv[2][0]));
+                                    const char *sentencia= cadena.c_str();
+                                    cout<<"\n\tEl ID ingresado es: "<<&argv[2][0]<<endl;
+                                    conexionI(sentencia);
 
-                                            for(int j = 0; j < nDeEleVec; j++)// convierte el string a entero
-                                                {
-                                                        simbolo = argv[2][j];
-                                                        cifra = char_2_int(&simbolo);
-                                                        //cout<<endl<<nDeEleVec-j-1<<" numero"<<cifra;
-                                                        ID += cifra * pow(10,nDeEleVec-j-1);
-                                                 }
-                                                      cout<<"\nEl ID ingresado es: "<<&argv[2][0];
-                                            conexionI(&argv[2][0]);
-
-                                }
+                                 }
 
 
                             if(simbolo=='a')
                                 {
-                                     const char *sentencia="SELECT semestre,seccion from cursos";
+                                     const char *sentencia="SELECT * FROM estimados";
                                      cout<<"\n\t\t\tParametro -a:"<<endl;
                                      conexionA(sentencia);//procedimiento avg y desv s en un archivo
                                 }
@@ -89,11 +80,10 @@ void conexionS(const char *sentencia);
                                      acercaDe();                                  //procedimiento acerca de
                                 }
 
-
-                            else       //SI LA OPCION INGRESADA NO ESTA EN EL MENU, ENTRA AQUI.
+                            if(simbolo=='h')       //SI LA OPCION INGRESADA NO ESTA EN EL MENU, ENTRA AQUI.
                                 {
-                                    cout<<endl<<"\n\t\t\tParametro invalido\n"<<endl;
-                                    ayuda();
+                                     cout<<endl<<"\n\t\t\tParametro invalido\n"<<endl;
+                                     ayuda();
                                 }
                 }
             }
@@ -101,30 +91,6 @@ void conexionS(const char *sentencia);
     return 0;
 }
 
-
-int char_2_int(const char *p)
-{
-    int x = 0;
-    bool neg = false;
-
-    if (*p == '-')
-    {
-        neg = true;
-        ++p;
-    }
-
-    while (*p >= '0' && *p <= '9')
-    {
-        x = (x*10) + (*p - '0');
-        ++p;
-    }
-
-    if (neg)
-    {
-        x = -x;
-    }
-    return x;
-}
 
 void ayuda()
 {
@@ -165,7 +131,7 @@ void acercaDe()
 
 }
 
-void conexionI(string ID)
+void conexionI(const char *sentencia)
 {
     PGconn *cnn = NULL;
     PGresult *consulta = NULL;
@@ -175,14 +141,6 @@ void conexionI(string ID)
     char *dataBase = "iswdb";
     char *user = "isw";
     char *passwd = "isw";
-
-    std::string  cadena= "SELECT (A.nota) as \"Nota Real\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id where A.estudiante_id=";
-    cadena.append(ID);
-    cadena.append("ctm");
-
-    const char *sentencia= cadena.c_str();
-
-    cout<<sentencia<<endl;
 
     int i;
 
@@ -204,8 +162,6 @@ void conexionI(string ID)
                     cout << "No. Columnas:" << columnas << endl << endl;
 
                 // Aqui se despliegan los nombres de las columnas
-
-                    cout << "Los nombres de las columnas son:" << endl << endl;
 
                     for (i=0; i<columnas; i++)
                         {
@@ -276,8 +232,6 @@ void conexionA(const char *sentencia)
 
                 // Aqui se despliegan los nombres de las columnas
 
-                   RegistroEstimaciones << "     Los nombres de las columnas son:" << endl << endl;
-
                     for (i=0; i<columnas; i++)
                         {
                             RegistroEstimaciones <<"     "<<  PQfname(consulta,i) << "         ";
@@ -347,11 +301,9 @@ void conexionS(const char *sentencia)
 
                 // Aqui se despliegan los nombres de las columnas
 
-                    cout << "Los nombres de las columnas son:" << endl << endl;
-
                     for (i=0; i<columnas; i++)
                         {
-                            cout << PQfname(consulta,i) << "              ";
+                            cout << "      " <<PQfname(consulta,i) << "     ";
                         }
 
                     cout << endl<<endl;
@@ -362,7 +314,7 @@ void conexionS(const char *sentencia)
                     {
                         for (int j=0; j<columnas; j++)
                             {
-                            cout  << PQgetvalue(consulta,i,j) << "     ";
+                            cout  << "  " <<PQgetvalue(consulta,i,j) << "   ";
                             }
                     cout << endl;
                     }
