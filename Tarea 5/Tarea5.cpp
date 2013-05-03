@@ -29,7 +29,7 @@ void conexionA(const char *sentencia);
 void conexionS(const char *sentencia);
 
 
-    if (argc <= 1)//si no tiene parametros imprime la ayuda
+    if (argc <= 1)  //si no tiene parametros imprime la ayuda
     {
       ayuda();
     }
@@ -47,7 +47,7 @@ void conexionS(const char *sentencia);
 
                             if(simbolo=='i' && argc==3)
                                  {
-                                    std::string  cadena= "SELECT * from estimados where estudiante_id= "; //concatenar la sentencia con el ID
+                                    std::string  cadena= "SELECT * from estimados where estudiante_id= ";  //concatenar la sentencia con el ID
                                     cadena.append((&argv[2][0]));
                                     const char *sentencia= cadena.c_str();
                                     cout<<"\n\tEl ID ingresado es: "<<&argv[2][0]<<endl;
@@ -60,24 +60,25 @@ void conexionS(const char *sentencia);
                                 {
                                      const char *sentencia="SELECT * FROM estimados";
                                      cout<<"\n\t\t\tParametro -a:"<<endl;
-                                     conexionA(sentencia);//procedimiento avg y desv s en un archivo
+                                     conexionA(sentencia);  //procedimiento avg y desv s en un archivo
                                 }
 
 
                             if(simbolo=='s')
                                 {
                                      const char *sentencia="SELECT avg(A.nota) as \"Promedio\", STDDEV(A.nota) as \"Desviacion Estandar\", C.asignatura as \"Asignatura\" FROM asignaturas_cursadas A INNER JOIN cursos C ON A.curso_id=C.curso_id group by C.asignatura";
-                                     cout<<"\n\t\t\tParametro -s"<<endl;//procedimiento mustra la desv y el promedio por asignatura
-                                     conexionS(sentencia);
+                                     cout<<"\n\t\t\tParametro -s"<<endl;
+                                     conexionS(sentencia);  //procedimiento mustra la desv y el promedio por asignatura
+
                                 }
 
 
                             if(simbolo=='v')
                                 {
-                                     acercaDe();                                  //procedimiento acerca de
+                                     acercaDe();  //procedimiento acerca de
                                 }
 
-                            if(simbolo=='h')       //SI LA OPCION INGRESADA NO ESTA EN EL MENU, ENTRA AQUI.
+                            if(simbolo=='h')
                                 {
                                      cout<<endl<<"\n\t\t\tParametro invalido\n"<<endl;
                                      ayuda();
@@ -158,7 +159,6 @@ void conexionI(const char *sentencia)
                     cout << "No. Filas:" << filas << endl;
                     cout << "No. Columnas:" << columnas << endl << endl;
 
-                // Aqui se despliegan los nombres de las columnas
 
                     for (i=0; i<columnas; i++)
                         {
@@ -227,7 +227,6 @@ void conexionA(const char *sentencia)
                     RegistroEstimaciones << "      No. Filas:" << filas << endl;
                     RegistroEstimaciones << "      No. Columnas:" << columnas << endl << endl;
 
-                // Aqui se despliegan los nombres de las columnas
 
                     for (i=0; i<columnas; i++)
                         {
@@ -296,7 +295,6 @@ void conexionS(const char *sentencia)
                     cout << "No. Filas:" << filas << endl;
                     cout << "No. Columnas:" << columnas << endl << endl;
 
-                // Aqui se despliegan los nombres de las columnas
 
                     for (i=0; i<columnas; i++)
                         {
