@@ -38,9 +38,6 @@ void conexionS(const char *sentencia);
 
                 int i=1;
                 char simbolo = argv[1][0];
-                //cout<<"\n"<<simbolo;
-
-                // cout<<"\nACA";
 
                 if(simbolo == '-')
                 {
