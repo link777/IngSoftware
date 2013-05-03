@@ -117,7 +117,7 @@ void acercaDe()
 
         cout<< "\n\n\t\tHora de compilacion: " __TIME__<<endl;
         cout<< "\n\t\tFecha de compilacion: " __DATE__<<endl;
-        cout<< "\n\t\tVersion de la aplicacion: BETA"<<endl;
+        cout<< "\n\t\tVersion de la aplicacion: v1.0"<<endl;
         cout<< "\n\t\tVersion del compilador GCC: " __VERSION__;
 
 
