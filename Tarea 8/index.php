@@ -5,7 +5,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>T! Panel de Login by Fullvice - Home</title>
+<title>Home</title>
     <?php
 if(isset($_SESSION["conectado"]) && $_SESSION["conectado"] == true){
   	echo '<script type="text/javascript">alert("Su usuario ingreso correctamente.");</script>'; 
@@ -16,7 +16,7 @@ if(isset($_SESSION["conectado"]) && $_SESSION["conectado"] == true){
 	else
 	{
     
-	echo 'Debes estar conectado para poder ver el contenido... ';	
+	echo '<h2>Debes estar conectado para poder ver el contenido...</h2>';	
 	echo '<a href="login.php"> <family="sans-serif">Identificarse</font><a>';
 	
 }
