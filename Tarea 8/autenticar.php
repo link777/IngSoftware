@@ -34,7 +34,7 @@
         }
         else
 	        {
-			exit ("<h2>Nombre de usuario o contraseña incorrecta</h2> <a href='javascript:history.back(-1)'>Volver</a>");
+			exit ("<h2>Rut o contraseña incorrecta</h2> <a href='javascript:history.back(-1)'>Volver</a>");
 	        }
 	        
 
