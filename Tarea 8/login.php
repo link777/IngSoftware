@@ -1,4 +1,5 @@
 <?php 
+  header("Content-type: text/html; charset=utf8");
 	session_start(); 
 	if(isset($_SESSION["conectado"])){
     header("Location: index.php");
@@ -11,7 +12,7 @@
 <title>Login</title>
 <meta name="description" content="slick Login">
 <meta name="author" content="Webdesigntuts+">
-<link rel="stylesheet" type="text/css" href="estilo/estilo.css" />
+<link rel="stylesheet" type="text/css" href="css/estilo.css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://www.modernizr.com/downloads/modernizr-latest.js"></script>
 <script type="text/javascript" src="jquery/jquery.js" ></script>
@@ -65,12 +66,17 @@ jQuery.extend(jQuery.validator.messages, {
 
 
 </head>
-<body body onload="rut.focus()">
-<form  id="login" action="autenticar.php"  method="post" class="login">
-    <div><label>Rut</label><input name="rut" id="rut" type="text" class="required rut" maxlength="12" placeholder="Rut" autocomplete="off" required></div>
-    <div><label>Password</label><input name="pass" type="password" placeholder="Constraseña" required> </div>
-    <div><input name="login"  type="submit" value="Autenticar"></div>
-</form>
-
+<body onload="rut.focus()">
+  <section class="container">
+<div class="login">
+      <h1>Acceso</h1>
+      <form id="login" method="post" action="autenticar.php">
+        <div><input name="rut" id="rut" type="text" class="required rut" maxlength="12" placeholder="Rut" autocomplete="off" required></div>
+            
+        <div><input name="password" type="password" placeholder="Constraseña" required> </div>
+ 
+        <p class="submit"><input type="submit" name="login" value="Autenticar"></p>
+      </form>
+    </div>
 </body>
 </html>

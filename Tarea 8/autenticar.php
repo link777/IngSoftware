@@ -1,10 +1,11 @@
 <?php 
+	header("Content-type: text/html; charset=utf8");
 	session_start();
 	include('lib/nusoap.php');
 
 
 	$rut = isset($_POST['rut']) ? $_POST['rut'] : null ;
-	$pass = isset($_POST['pass']) ? $_POST['pass'] : null ;
+	$pass = isset($_POST['password']) ? $_POST['password'] : null ;
 
 		$passup = strtoupper($pass); // contraseña normal a mayusculas
 			$passhash = hash('sha256', $passup); // contraseña en mayusculas a hash sha256
@@ -17,7 +18,7 @@
 	
 	if ($error)
 	{
-	 echo '<h2>Constructor error</h2><pre>' . $error . '</pre>';
+	 echo '<txt>Constructor error</txt><pre>' . $error . '</pre>';
 	}
 
 
@@ -34,14 +35,17 @@
         }
         else
 	        {
-			exit ("<h2>Rut o contraseña incorrecta</h2> <a href='javascript:history.back(-1)'>Volver</a>");
+			exit ("<txt>Rut o contraseña incorrecta</txt> <a href='javascript:history.back(-1)'>Volver</a>");
 	        }
 	        
 
+/* 
+
+// Funciones que guardan los errores
 
 	if ($cliente->fault)
 	{
-	 echo '<h2>Falla</h2><pre>';
+	 echo '<txt>Falla</txt><pre>';
 	  print_r($resultado);
 	 echo '</pre>';
 	} else
@@ -51,18 +55,18 @@
 		 if ($error)
 		 {
 		  // Muestra el error
-		  echo '<h2>Error</h2><pre>' . $error . '</pre>';
+		  echo '<txt>Error</txt><pre>' . $error . '</pre>';
 		 } else
 			 {
 			  // Muestra el resultado
-			  echo '<h2>Resultado</h2><pre>';
+			  echo '<txt>Resultado</txt><pre>';
 			   print_r($resultado);
 			  echo '</pre>';
 			 }
 		}
 
-echo '<h2>Debug</h2><pre>' . htmlspecialchars($cliente->debug_str, ENT_QUOTES) . '</pre>';
-?>
+// Debug en caso de error
 
-// 169130264
-// 2dd675166dc383a6a52f3164564fa838247ead80f8a45330d20a9cdf64671471
+echo '<txt>Debug</txt><pre>' . htmlspecialchars($cliente->debug_str, ENT_QUOTES) . '</pre>';
+*/
+?>

@@ -5,19 +5,20 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="css/estilo.css" />
 <title>Home</title>
     <?php
 if(isset($_SESSION["conectado"]) && $_SESSION["conectado"] == true){
   	echo '<script type="text/javascript">alert("Su usuario ingreso correctamente.");</script>'; 
-	    echo '<h2>Pagina solo para usuarios registrados</h2><br />';
-	echo '<a align="left" href="logout.php">Logout<a>';
+	    echo '<txt>Pagina solo para usuarios registrados.</txt><br />';
+	echo '<a align="left" href="logout.php">Salir<a>';
 	
 	}
 	else
 	{
     
-	echo '<h2>Debes estar conectado para poder ver el contenido...</h2>';	
-	echo '<a href="login.php"> <family="sans-serif">Identificarse</font><a>';
+	echo '<txt>Debes estar conectado para poder ver el contenido...</txt><br />';	
+	echo '<a href="login.php"> <family="sans-serif"> Identificarse</font><a>';
 	
 }
 ?> 
